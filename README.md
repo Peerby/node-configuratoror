@@ -10,12 +10,59 @@ npm i configuratoror
 ```
 
 ## usage
+**folder structure:**
+```
+etc/
+  common.js
+  production.js
+  development.js
+  whatever.js
+```
+
+**config files**
+
+`common.js`:
+```js
+module.exports = {
+    database: {
+        uri: 'http://localhost:1338',
+        username: 'admin'
+    }
+}
+```
+
+`production.js`:
+```js
+module.exports = {
+    _extends: 'common',
+    database: {
+        name: 'production',
+        password: 'michaeljordan',
+    }
+}
+```
+
+**load config**
 ```js
 var options = {
     folder: './etc', // path from pwd to folder where configs are stored
 };
-var env = process.env.NODE_ENV; // it's up to you how to determine what environment you're running in
+var env = 'production'; // it's up to you how to determine what environment you're running in, e.g. process.env.NODE_ENV
 var config = require('configuratoror')(options)(env);
+
+console.log(config);
+```
+
+**output**
+```js
+{
+    database: {
+        uri: 'http://localhost:1338',
+        username: 'admin'
+        name: 'production',
+        password: 'michaeljordan',
+    },
+}
 ```
 
 ## details
