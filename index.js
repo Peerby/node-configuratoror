@@ -17,7 +17,7 @@ module.exports = function loadConfigs(options) {
     }
 
     var configs = processConfigs(foundConfigs);
-    console.log(require('util').inspect(configs, false, null));
+    // console.log(require('util').inspect(configs, false, null));
     return function selectConfig(name) {
         if (!name) {
             throw new Error('name parameter is required');
