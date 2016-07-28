@@ -10,7 +10,7 @@ npm i configuratoror
 ```
 
 ## usage
-**folder structure:**
+**folder structure**
 ```
 etc/
   common.js
