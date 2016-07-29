@@ -36,5 +36,8 @@
   },
   "pre-commit": [
     "pre-commit"
-  ]
+  ],
+  "engines": {
+    "node": ">=4"
+  }
 }
