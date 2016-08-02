@@ -78,13 +78,14 @@ function processConfig(configs, name) {
 
     // check for circular dependencies
     var visited = [];
-    var tempconfig = config;
-    while (tempconfig._extends) {
-        if (visited.indexOf(tempconfig._extends) !== -1) {
+    var tempConfig = config;
+    while (tempConfig._extends) {
+        if (_.includes(visited, tempConfig._extends)) {
+            visited.push(tempConfig._extends);
             throw new Error('circular dependencies detected in chain ' + JSON.stringify(visited));
         }
-        visited.push(tempconfig._extends);
-        tempconfig = configs[tempconfig._extends];
+        visited.push(tempConfig._extends);
+        tempConfig = configs[tempConfig._extends];
     }
 
     var extendedConfig = processConfig(configs, config._extends);

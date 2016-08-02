@@ -53,6 +53,6 @@ describe('circular configuratoror', function () {
     it('throws an error on circular dependencies', function () {
         assert.throws(function () {
             configuratoror({ folder: './test/circular_config' });
-        }, Error, 'circular dependencies detected in chain ["e","f","d"]');
+        }, Error, 'circular dependencies detected in chain ["e","f","d","e"]');
     });
 });
