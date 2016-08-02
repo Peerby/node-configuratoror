@@ -72,6 +72,3 @@ console.log(config);
 - a config can extend another config by specifying `_extends: '<name of other config>'`. Properties in the extending config overwrite properties in the extended config. There's no maximum to the amount of inheritance levels.
 - configs are deeply merged using [lodash.merge](https://lodash.com/docs#merge).
 - this module throws errors because your process should die when it fails to load its configuration. If you disagree (for your specific use case), don't use this module or `try-catch` your way out of it.
-
-## warning
-There's currently no protection against indirectly self-referencing configs, e.g. `A -> B -> A`. If you setup your configs like this, your process will crash because it will get into an infinite loop.

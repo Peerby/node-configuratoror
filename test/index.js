@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var expect = require('chai').expect;
+var assert = require('chai').assert;
 
 var configuratoror = require('../index.js');
 
@@ -46,5 +47,12 @@ describe('configuratoror', function () {
         expect(c.something.else).to.eql({});
         expect(c.something.anything.name).to.eql('b');
         expect(c.something.anything.arr).to.eql([4, 5, 6]);
+    });
+});
+describe('circular configuratoror', function () {
+    it('throws an error on circular dependencies', function () {
+        assert.throws(function () {
+            configuratoror({ folder: './test/circular_config' });
+        }, Error, 'circular dependencies detected in chain ["e","f","d","e"]');
     });
 });

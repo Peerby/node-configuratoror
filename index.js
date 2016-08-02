@@ -67,9 +67,6 @@ function processConfigs(foundConfigs) {
 // NOTE: not the most efficient because sub-chains might be walked more than once
 //       but who cares, this runs once per process
 //       and who has more than a bunch of config files anyway
-// NOTE: this function prevents immediate self-referencing but not indirect
-//       so A -> A throws an error, but A -> B -> A doesn't
-//       and will probably just halt your process from continuing (AKA infinite loop)
 function processConfig(configs, name) {
     var config = configs[name];
     if (!config._extends) {
@@ -78,6 +75,19 @@ function processConfig(configs, name) {
     if (config._extends === name) {
         throw new Error('config cannot extend itself');
     }
+
+    // check for circular dependencies
+    var visited = [];
+    var tempConfig = config;
+    while (tempConfig._extends) {
+        if (_.includes(visited, tempConfig._extends)) {
+            visited.push(tempConfig._extends);
+            throw new Error('circular dependencies detected in chain ' + JSON.stringify(visited));
+        }
+        visited.push(tempConfig._extends);
+        tempConfig = configs[tempConfig._extends];
+    }
+
     var extendedConfig = processConfig(configs, config._extends);
     return mergeConfigs(extendedConfig, config);
 }
